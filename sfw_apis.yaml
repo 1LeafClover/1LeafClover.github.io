@@ -1,0 +1,502 @@
+openapi: 3.0.3
+info:
+  title: Skills Framework API
+  version: 1.0.12
+tags:
+  - name: Data APIs
+    description: To supply information about job roles and skills in line with Industry Transformation Maps
+  - name: Mapping APIs
+    description: APIs for skills mapping between different frameworks
+    
+paths:
+  /skillsFramework/jobs:
+    get:
+      summary: Get job role details
+      description: Retrieve complete job role details, including description, key tasks, skills, and performance expectations.
+      tags:
+        - Data APIs
+      parameters:
+        - name: sfw_version
+          in: query
+          required: false
+          description: Version of the framework
+          schema:
+            type: string
+          example: "sfw1.0"
+        - name: track
+          in: query
+          required: false
+          description: The official track name under which a job role falls
+          schema:
+            type: string
+          example: "Finance and Regulations"
+        - name: sector
+          in: query
+          required: false
+          description: The sector name according to the Skills Framework
+          schema:
+            type: string
+          example: "Wholesale Trade"
+        - name: job_role
+          in: query
+          required: false
+          description: Name of the job role as defined in the framework
+          schema:
+            type: string
+          example: "Head of Trade Finance"
+        - name: skill_title
+          in: query
+          required: false
+          description: The name of the skill required for the job role, mapped to the framework.
+          schema:
+            type: string
+          example: "Organisational Analysis"
+        - name: keytask
+          in: query
+          required: false
+          description: Specific key tasks aligned with the Skills Framework for this job role.
+          schema:
+            type: string
+          example: "Manage department's recruitment and retention efforts"
+      responses:
+        '200':
+          description: Job role details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jobs'
+        '400':
+          description: Invalid request
+        '404':
+          description: Job role not found
+        '500':
+          description: Server error
+  
+  /skillsFramework/skills:
+    get:
+      summary: Get skills details
+      description: Retrieve detailed skill-related information, including proficiency level, skill type, and descriptions.
+      tags:
+        - Data APIs
+      parameters:
+        - name: sfw_version
+          in: query
+          required: false
+          description: Version of the framework
+          schema:
+            type: string
+          example: "sfw1.0"
+        - name: skill_type
+          in: query
+          required: false
+          description: Classification of the skill (e.g., TSC, CCS)
+          schema:
+            type: string
+          example: "tsc"
+        - name: sector
+          in: query
+          required: false
+          description: The sector name according to the Skills Framework
+          schema:
+            type: string
+          example: "Wholesale Trade"
+        - name: skill_title
+          in: query
+          required: false
+          description: Name of the skill
+          schema:
+            type: string
+          example: "Organisational Analysis"
+        - name: skill_code
+          in: query
+          required: false
+          description: A unique identifiers for skills.
+          schema:
+            type: string
+          example: "CCS-CLB-A001-1"
+      responses:
+        '200':
+          description: Skills details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/skills'
+        '400':
+          description: Invalid request
+        '404':
+          description: Skill not found
+        '500':
+          description: Server error
+
+  /skillsFramework/mapping/11kTo2k:
+    get:
+      summary: Get 11K to 2K skills mapping
+      description: Retrieve mapping between 11K skills and their corresponding 2K skills with proficiency level equivalencies
+      tags:
+        - Mapping APIs
+      parameters:
+        - name: sfw_version
+          in: query
+          required: false
+          description: Version of the framework
+          schema:
+            type: string
+          example: "sfw1.0"
+        - name: skill_11k_id
+          in: query
+          required: false
+          description: Unique identifier for the 11K skill
+          schema:
+            type: string
+          example: "ec8312d6dedb239cbbbb85e3280abe2488a2db9bad4cee6df6d437a8960f462a"
+        - name: skill_11k_title
+          in: query
+          required: false
+          description: Title of the 11K skill
+          schema:
+            type: string
+          example: "Accounting Standards"
+        - name: skill_2k_id
+          in: query
+          required: false
+          description: Unique identifier for the 2K skill
+          schema:
+            type: string
+          example: "c5a7901a13ba28f43ef605fd91e55640ed5a6009a47043eb908239eff954dc12"
+        - name: skill_2k_title
+          in: query
+          required: false
+          description: Title of the 2K skill
+          schema:
+            type: string
+          example: "Accounting Standards"
+        - name: skill_type
+          in: query
+          required: false
+          description: Classification of the skill (e.g., TSC, CCS)
+          schema:
+            type: string
+          example: "tsc"
+        - name: sector_title
+          in: query
+          required: false
+          description: The sector name for the skill
+          schema:
+            type: string
+          example: "Accountancy"
+        - name: proficiency_level
+          in: query
+          required: false
+          description: Proficiency level of the 11K skill
+          schema:
+            type: string
+          example: "4"
+      responses:
+        '200':
+          description: Skills mapping retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/11kTo2kMapping'
+        '400':
+          description: Invalid request
+        '404':
+          description: Mapping not found
+        '500':
+          description: Server error
+
+  /skillsFramework/skills/2kList:
+    get:
+      summary: Get 2K skills list
+      description: Retrieve list of 2K skills with their details
+      tags:
+        - Mapping APIs
+      parameters:
+        - name: skill_id
+          in: query
+          required: false
+          description: Unique identifier for the 2K skill
+          schema:
+            type: string
+          example: "002f893e2f7a7427d4720000e1457a994448c7507c105755880e6649644f95b9"
+        - name: skill_title
+          in: query
+          required: false
+          description: Title of the 2K skill
+          schema:
+            type: string
+          example: "Generative AI Principles and Applications"
+        - name: skill_type
+          in: query
+          required: false
+          description: Classification of the skill (e.g., TSC, CCS)
+          schema:
+            type: string
+          example: "tsc"
+        - name: is_cross_sector
+          in: query
+          required: false
+          description: Whether the skill is cross-sector
+          schema:
+            type: boolean
+          example: false
+        - name: is_active
+          in: query
+          required: false
+          description: Whether the skill is currently active
+          schema:
+            type: boolean
+          example: true
+      responses:
+        '200':
+          description: 2K skills list retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/2kSkillsList'
+        '400':
+          description: Invalid request
+        '404':
+          description: Skills not found
+        '500':
+          description: Server error
+
+components:
+  schemas:
+    jobs:
+      type: object
+      properties:
+        sfw_version:
+          type: string
+          description: Version of the framework.
+          example: "sfw1.0"
+        sector:
+          type: string
+          description: The sector name according to the Skills Framework, serving as a reference for classification.
+          example: "Wholesale Trade"
+        track:
+          type: string
+          description: The official track name under which a job role falls.
+          example: "Finance and Regulations"
+        job_role:
+          type: string
+          description: Name of the job role as defined in the framework. 
+          example: "Head of Trade Finance"
+        jobrole_description:
+          type: string
+          description:  A detailed description of the job role.
+          example: "The Head of Trade Finance assumes responsibility for driving execution of the organisation's trade finance activities and strategies. He/She is expected to have extensive knowledge of trade flows, trade settlements and trade finance operations. He oversees negotiations with financial institutions on trade finance. He is expected to have strong stakeholder engagement skills, team leadership capabilities and deep trade finance knowledge, both locally and globally."
+        performance_expectations:
+          type: string
+          description: Industry-defined performance standards for the job role, including statutory requirements.
+          example: ""
+        critical_work_function:
+          type: string
+          description: The work function associated with the job role, defining key responsibilities.
+          example: "Drive collaboration of human resource, technology and finance initiatives"
+        keytask:
+          type: string
+          description: Specific key tasks aligned with the Skills Framework for this job role.
+          example: "Manage department's recruitment and retention efforts"
+        skill_title:
+          type: string
+          description: The name of the skill required for the job role, mapped to the framework.
+          example: "Organisational Analysis"
+        skill_type:
+          type: string
+          description: Classification of the skill (e.g., TSC, CCS).
+          example: "tsc"
+        proficiency_level:
+          type: string
+          description: The required proficiency level for the skill, rated numerically or by category (e.g., 1, 2, 3, 4, 5, 6, basic, intermediate, advanced).
+          example: "2"
+          
+    skills:
+      type: object
+      properties:
+        sfw_version:
+          type: string
+          description: Version of the framework.
+          example: "sfw2.0"
+        sector:
+          type: string
+          description: The sector name according to the Skills Framework, serving as a reference for classification.
+          example: "Critical Core Skills"
+        skill_title:
+          type: string
+          description: The name of the skill required for the job role, mapped to the framework.
+          example: "Collaboration"
+        skill_sector_description:
+          type: string
+          description: Description of the skill within the sector.
+          example: "Manage relationships and work collaboratively and effectively with others to achieve goals"
+        skill_type:
+          type: string
+          description: Classification of the skill (e.g., TSC, CCS).
+          example: "ccs"
+        emerging_tsc:
+          type: boolean
+          description: Indicates whether the skill is emerging.
+          example: false
+        proficiency_level:
+          type: string
+          description: The required proficiency level for the skill, rated numerically or by category (e.g., 1, 2, 3, 4, 5, 6, Basic, Intermediate, Advanced).
+          example: "Advanced"
+        proficiency_description:
+          type: string
+          description: Details about the expected proficiency level.
+          example: "Establish team effectiveness and manage partnerships to create a cooperative working environment which enables the achievement of goals"
+        ability_knowledge_classification:
+          type: string
+          description: Classification of the skill (e.g., ability, knowledge).
+          example: "knowledge"
+        ability_knowledge_item:
+          type: string
+          description: Details about the ability or knowledge classification.
+          example: "Stakeholder management strategies"
+        skill_code:
+          type: string
+          description: A unique identifiers for skills.
+          example: "CCS-CLB-A001-1"
+        range_of_application:
+          type: string
+          description: Areas where the skill can be applied, covering industry-specific and cross-functional use cases.
+          example: |
+            - Customer data management systems
+            - Information technology asset management
+            - Information technology risk management
+            - Cybersecurity risk solutions
+            - Risk management data and tools
+            - Data management frameworks
+
+    11kTo2kMapping:
+      type: object
+      properties:
+        skill_11k_id:
+          type: string
+          description: Unique identifier for the 11K skill
+          example: "ec8312d6dedb239cbbbb85e3280abe2488a2db9bad4cee6df6d437a8960f462a"
+        skill_11k_title:
+          type: string
+          description: Title of the 11K skill
+          example: "Accounting Standards"
+        skill_11k_description:
+          type: string
+          description: Description of the 11K skill
+          example: "Apply financial reporting framework prescribed by the relevant governing body to ensure all transactions meet regulatory requirements"
+        proficiency_level:
+          type: string
+          description: Proficiency level of the 11K skill
+          example: "4"
+        sfw2_pl_equivalent:
+          type: string
+          description: Equivalent proficiency level in SFW 2.0
+          example: "4"
+        proficiency_description:
+          type: string
+          description: Description of the proficiency level
+          example: "Apply the requirements of relevant financial reporting framework to achieve the objectives of financial reporting"
+        sfw_version:
+          type: string
+          description: Version of the framework
+          example: "sfw1.0"
+        tsc_code:
+          type: string
+          description: TSC code for the skill
+          example: "ACC-CRP-4001-1.1"
+        sector_title:
+          type: string
+          description: The sector name for the skill
+          example: "Accountancy"
+        category:
+          type: string
+          description: Category of the skill
+          example: "Financial and Transaction Management"
+        skill_type:
+          type: string
+          description: Classification of the skill (e.g., TSC, CCS)
+          example: "tsc"
+        is_sfw_emerging:
+          type: boolean
+          description: Whether the skill is emerging in SFW
+          example: false
+        is_sfs_emerging:
+          type: boolean
+          description: Whether the skill is emerging in SFS
+          example: false
+        skill_2k_id:
+          type: string
+          description: Unique identifier for the 2K skill
+          example: "c5a7901a13ba28f43ef605fd91e55640ed5a6009a47043eb908239eff954dc12"
+        skill_2k_title:
+          type: string
+          description: Title of the 2K skill
+          example: "Accounting Standards"
+        skill_2k_description:
+          type: string
+          description: Description of the 2K skill
+          example: "Apply financial reporting framework prescribed by the relevant governing body to ensure all transactions meet regulatory requirements"
+        skill_entry_date:
+          type: string
+          format: date
+          description: Date when the skill was entered
+          example: "2024-12-16"
+        skill_sector_entry_date:
+          type: string
+          format: date
+          description: Date when the skill was entered for the sector
+          example: "2024-12-16"
+        skill_sector_pl_entry_date:
+          type: string
+          format: date
+          description: Date when the skill proficiency level was entered for the sector
+          example: "2024-12-16"
+        skill_transaction_id:
+          type: string
+          description: Transaction ID for the skill
+          example: "aac80f8196c19d3c0819c25ee7bdf6a53ec343d8beea5b05aec24a23280e1713"
+        skill_sector_transaction_id:
+          type: string
+          description: Transaction ID for the skill sector
+          example: "9fa5fa3458a4ca10ebb5e65651a8acca479f4998b9653b16ae9464963f181212"
+        skill_sector_pl_transaction_id:
+          type: string
+          description: Transaction ID for the skill sector proficiency level
+          example: "e11a6a944c69aba32257fc4b1090d571edde29b3086801d6ee69836efea82f39"
+
+    2kSkillsList:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          description: Transaction ID for the skill
+          example: "1c170b110aed1942f07ecb2ccbec5b5d66a10a74b0196185fc6572c564b8555e"
+        skill_id:
+          type: string
+          description: Unique identifier for the 2K skill
+          example: "002f893e2f7a7427d4720000e1457a994448c7507c105755880e6649644f95b9"
+        skill_type:
+          type: string
+          description: Classification of the skill (e.g., TSC, CCS)
+          example: "tsc"
+        skill_title:
+          type: string
+          description: Title of the 2K skill
+          example: "Generative AI Principles and Applications"
+        skill_description:
+          type: string
+          description: Description of the 2K skill
+          example: "Understand and apply the concepts, frameworks, applications, and implications of generative AI models."
+        is_cross_sector:
+          type: boolean
+          description: Whether the skill is cross-sector
+          example: false
+        is_active:
+          type: boolean
+          description: Whether the skill is currently active
+          example: true
+        entry_date:
+          type: string
+          format: date
+          description: Date when the skill was entered
+          example: "2025-02-18"
