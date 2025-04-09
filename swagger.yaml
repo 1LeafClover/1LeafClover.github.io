@@ -134,63 +134,6 @@ paths:
       description: Retrieve mapping between 11K skills and their corresponding 2K skills with proficiency level equivalencies
       tags:
         - Mapping APIs
-      parameters:
-        - name: sfw_version
-          in: query
-          required: false
-          description: Version of the framework
-          schema:
-            type: string
-          example: "sfw1.0"
-        - name: skill_11k_id
-          in: query
-          required: false
-          description: Unique identifier for the 11K skill
-          schema:
-            type: string
-          example: "ec8312d6dedb239cbbbb85e3280abe2488a2db9bad4cee6df6d437a8960f462a"
-        - name: skill_11k_title
-          in: query
-          required: false
-          description: Title of the 11K skill
-          schema:
-            type: string
-          example: "Accounting Standards"
-        - name: skill_2k_id
-          in: query
-          required: false
-          description: Unique identifier for the 2K skill
-          schema:
-            type: string
-          example: "c5a7901a13ba28f43ef605fd91e55640ed5a6009a47043eb908239eff954dc12"
-        - name: skill_2k_title
-          in: query
-          required: false
-          description: Title of the 2K skill
-          schema:
-            type: string
-          example: "Accounting Standards"
-        - name: skill_type
-          in: query
-          required: false
-          description: Classification of the skill (e.g., TSC, CCS)
-          schema:
-            type: string
-          example: "tsc"
-        - name: sector_title
-          in: query
-          required: false
-          description: The sector name for the skill
-          schema:
-            type: string
-          example: "Accountancy"
-        - name: proficiency_level
-          in: query
-          required: false
-          description: Proficiency level of the 11K skill
-          schema:
-            type: string
-          example: "4"
       responses:
         '200':
           description: Skills mapping retrieved successfully
@@ -211,42 +154,6 @@ paths:
       description: Retrieve list of 2K skills with their details
       tags:
         - Mapping APIs
-      parameters:
-        - name: skill_id
-          in: query
-          required: false
-          description: Unique identifier for the 2K skill
-          schema:
-            type: string
-          example: "002f893e2f7a7427d4720000e1457a994448c7507c105755880e6649644f95b9"
-        - name: skill_title
-          in: query
-          required: false
-          description: Title of the 2K skill
-          schema:
-            type: string
-          example: "Generative AI Principles and Applications"
-        - name: skill_type
-          in: query
-          required: false
-          description: Classification of the skill (e.g., TSC, CCS)
-          schema:
-            type: string
-          example: "tsc"
-        - name: is_cross_sector
-          in: query
-          required: false
-          description: Whether the skill is cross-sector
-          schema:
-            type: boolean
-          example: false
-        - name: is_active
-          in: query
-          required: false
-          description: Whether the skill is currently active
-          schema:
-            type: boolean
-          example: true
       responses:
         '200':
           description: 2K skills list retrieved successfully
