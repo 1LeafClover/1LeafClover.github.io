@@ -64,7 +64,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/jobs'
+                type: array
+                items:
+                  $ref: '#/components/schemas/jobs'
         '400':
           description: Invalid request
         '404':
@@ -120,51 +122,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/skills'
+                type: array
+                items:
+                  $ref: '#/components/schemas/skills'
         '400':
           description: Invalid request
         '404':
           description: Skill not found
-        '500':
-          description: Server error
-
-  /skillsFramework/mapping/11kTo2k:
-    get:
-      summary: Get 11K to 2K skills mapping
-      description: Retrieve mapping between 11K skills and their corresponding 2K skills with proficiency level equivalencies
-      tags:
-        - Mapping APIs
-      responses:
-        '200':
-          description: Skills mapping retrieved successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/11kTo2kMapping'
-        '400':
-          description: Invalid request
-        '404':
-          description: Mapping not found
-        '500':
-          description: Server error
-
-  /skillsFramework/skills/2kList:
-    get:
-      summary: Get 2K skills list
-      description: Retrieve list of 2K skills with their details
-      tags:
-        - Mapping APIs
-      responses:
-        '200':
-          description: 2K skills list retrieved successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/2kSkillsList'
-        '400':
-          description: Invalid request
-        '404':
-          description: Skills not found
         '500':
           description: Server error
 
@@ -275,135 +239,3 @@ components:
             - Cybersecurity risk solutions
             - Risk management data and tools
             - Data management frameworks
-
-    11kTo2kMapping:
-      type: object
-      properties:
-        skill_11k_id:
-          type: string
-          description: Unique identifier for the 11K skill
-          example: "ec8312d6dedb239cbbbb85e3280abe2488a2db9bad4cee6df6d437a8960f462a"
-        skill_11k_title:
-          type: string
-          description: Title of the 11K skill
-          example: "Accounting Standards"
-        skill_11k_description:
-          type: string
-          description: Description of the 11K skill
-          example: "Apply financial reporting framework prescribed by the relevant governing body to ensure all transactions meet regulatory requirements"
-        proficiency_level:
-          type: string
-          description: Proficiency level of the 11K skill
-          example: "4"
-        sfw2_pl_equivalent:
-          type: string
-          description: Equivalent proficiency level in SFW 2.0
-          example: "4"
-        proficiency_description:
-          type: string
-          description: Description of the proficiency level
-          example: "Apply the requirements of relevant financial reporting framework to achieve the objectives of financial reporting"
-        sfw_version:
-          type: string
-          description: Version of the framework
-          example: "sfw1.0"
-        tsc_code:
-          type: string
-          description: TSC code for the skill
-          example: "ACC-CRP-4001-1.1"
-        sector_title:
-          type: string
-          description: The sector name for the skill
-          example: "Accountancy"
-        category:
-          type: string
-          description: Category of the skill
-          example: "Financial and Transaction Management"
-        skill_type:
-          type: string
-          description: Classification of the skill (e.g., TSC, CCS)
-          example: "tsc"
-        is_sfw_emerging:
-          type: boolean
-          description: Whether the skill is emerging in SFW
-          example: false
-        is_sfs_emerging:
-          type: boolean
-          description: Whether the skill is emerging in SFS
-          example: false
-        skill_2k_id:
-          type: string
-          description: Unique identifier for the 2K skill
-          example: "c5a7901a13ba28f43ef605fd91e55640ed5a6009a47043eb908239eff954dc12"
-        skill_2k_title:
-          type: string
-          description: Title of the 2K skill
-          example: "Accounting Standards"
-        skill_2k_description:
-          type: string
-          description: Description of the 2K skill
-          example: "Apply financial reporting framework prescribed by the relevant governing body to ensure all transactions meet regulatory requirements"
-        skill_entry_date:
-          type: string
-          format: date
-          description: Date when the skill was entered
-          example: "2024-12-16"
-        skill_sector_entry_date:
-          type: string
-          format: date
-          description: Date when the skill was entered for the sector
-          example: "2024-12-16"
-        skill_sector_pl_entry_date:
-          type: string
-          format: date
-          description: Date when the skill proficiency level was entered for the sector
-          example: "2024-12-16"
-        skill_transaction_id:
-          type: string
-          description: Transaction ID for the skill
-          example: "aac80f8196c19d3c0819c25ee7bdf6a53ec343d8beea5b05aec24a23280e1713"
-        skill_sector_transaction_id:
-          type: string
-          description: Transaction ID for the skill sector
-          example: "9fa5fa3458a4ca10ebb5e65651a8acca479f4998b9653b16ae9464963f181212"
-        skill_sector_pl_transaction_id:
-          type: string
-          description: Transaction ID for the skill sector proficiency level
-          example: "e11a6a944c69aba32257fc4b1090d571edde29b3086801d6ee69836efea82f39"
-
-    2kSkillsList:
-      type: object
-      properties:
-        transaction_id:
-          type: string
-          description: Transaction ID for the skill
-          example: "1c170b110aed1942f07ecb2ccbec5b5d66a10a74b0196185fc6572c564b8555e"
-        skill_id:
-          type: string
-          description: Unique identifier for the 2K skill
-          example: "002f893e2f7a7427d4720000e1457a994448c7507c105755880e6649644f95b9"
-        skill_type:
-          type: string
-          description: Classification of the skill (e.g., TSC, CCS)
-          example: "tsc"
-        skill_title:
-          type: string
-          description: Title of the 2K skill
-          example: "Generative AI Principles and Applications"
-        skill_description:
-          type: string
-          description: Description of the 2K skill
-          example: "Understand and apply the concepts, frameworks, applications, and implications of generative AI models."
-        is_cross_sector:
-          type: boolean
-          description: Whether the skill is cross-sector
-          example: false
-        is_active:
-          type: boolean
-          description: Whether the skill is currently active
-          example: true
-        entry_date:
-          type: string
-          format: date
-          description: Date when the skill was entered
-          example: "2025-02-18"
